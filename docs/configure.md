@@ -147,3 +147,23 @@ class PasswordGrantVerifier
     	]
     ],
 ```
+
+## app/Http/routes.php
+
+```php
+/**
+ * Api
+ */
+$api = app('Dingo\Api\Routing\Router');
+
+$api->version('v1', function ($api) {
+	$api->post('oauth/access_token', function() {
+		return Authorizer::issueAccessToken();
+	});
+});
+```
+## run in MySql 
+~~~
+INSERT INTO `oauth_clients` (`id`, `secret`, `name`, `created_at`, `updated_at`) VALUES
+('client_id.dddd8f3833b', 'secret@cf6ggatd59c455tc0te8tatt5b', ‘My website’, ‘2016–05–12 11:00:00’, ‘0000–00–00 00:00:00’);
+~~~
