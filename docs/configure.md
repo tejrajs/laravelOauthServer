@@ -104,3 +104,46 @@ class OAuthServiceProvider extends ServiceProvider
     ];
 ```
 
+## app\Verifier\PasswordGrantVerifier.php
+
+```php
+namespace App\Verifier;
+
+
+use Illuminate\Support\Facades\Auth;
+
+class PasswordGrantVerifier
+{
+	public function verify($username, $password)
+	{
+		$credentials = [
+				'email'    => $username,
+				'password' => $password,
+		];
+
+		if (Auth::once($credentials)) {
+			return Auth::user()->id;
+		}
+
+		return false;
+	}
+}
+```
+
+## config/oauth2.php
+
+```php
+	'grant_types' => [
+    	'password' => [
+    		'class' => 'League\OAuth2\Server\Grant\PasswordGrant',
+    		// the code to run in order to verify the user's identity
+    		'callback' => 'App\Verifier\PasswordGrantVerifier@verify',
+    		'access_token_ttl' => 604800,
+    	],
+    	'refresh_token' => [
+    		'class' => '\League\OAuth2\Server\Grant\RefreshTokenGrant',
+    		'access_token_ttl' => 2592000,
+    		'refresh_token_ttl' => 2592000
+    	]
+    ],
+```
