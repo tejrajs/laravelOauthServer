@@ -1,0 +1,9 @@
+.buildpath
+/vendor
+/node_modules
+/public/storage
+.project
+.settings/
+Homestead.yaml
+Homestead.json
+.env
