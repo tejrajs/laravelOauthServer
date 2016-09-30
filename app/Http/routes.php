@@ -1,5 +1,7 @@
 <?php
 
+use App\Clients;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -28,13 +30,18 @@ $api->version('v1', function ($api) {
 
 //Show user info via restful service.
 $api->version('v1', ['namespace' => 'App\Http\Controllers'], function ($api) {
-	$api->get('users', 'UsersController@index');
-	$api->get('users/{id}', 'UsersController@show');
+	$api->get('clients', 'ClientsController@index');
+	$api->get('clients/{id}', 'ClientsController@show');
 });
 
-//Just a test with auth check.
-$api->version('v1', ['middleware' => 'api.auth'] , function ($api) {
-	$api->get('time', function () {
-		return ['now' => microtime(), 'date' => date('Y-M-D',time())];
-	});
+$api->version('v1', ['middleware' => 'api.auth'/*, 'scopes' => ['read_client_data', 'write_client_data']*/], function ($api) {
+	$api->post('clients/store', 'App\Http\Controllers\ClientsController@store');
+	$api->delete('clients/{id}', 'App\Http\Controllers\ClientsController@destroy');
+	$api->put('clients/{id}', 'App\Http\Controllers\ClientsController@update');
 });
+//Just a test with auth check.
+// $api->version('v1', ['middleware' => 'api.auth'] , function ($api) {
+// 	$api->put('clients/{id}', 'ClientsController@update');
+// 	$api->delete('clients/{id}', 'ClientsController@destroy');
+// 	$api->post('clients/store', 'ClientsController@store');
+// });
