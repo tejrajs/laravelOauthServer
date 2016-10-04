@@ -46,11 +46,19 @@ client_secret = secret.sdRxg#@&!Dgdfffg@#%$fsdf
 ~~~
 http://localhost:8000/api/oauth/access_token
 ~~~
- 
+### Oauth Test Help 
+~~~
+Header
+
+Authorization  Bearer  <access_token>
+Content-Type  application/x-www-form-urlencoded
+
+
+~~~ 
 ### Test URL With access token
 
 ~~~
 api/clients/<id> DELETE
 api/clients/<id> PUT
-api/clients POST
+api/clients/store POST
 ~~~
